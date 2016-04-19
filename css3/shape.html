@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .shape{
+            text-align: center;
+            display:inline-block;
+            width:100px;
+            height:100px;
+            margin:10px;
+        }
+        /*flower1*/
+        .flower1{
+            float:left;
+            background-color: red;
+            margin:0;
+            padding:0;
+            width:50px;
+            height:50px;
+        }
+        .flower1:nth-child(1){
+            border-radius: 50% 50% 0 50%;
+        }
+        .flower1:nth-child(2){
+            border-radius: 50% 50% 50% 0;
+        }
+        .flower1:nth-child(3){
+            border-radius: 50% 0 50% 50%;
+        }
+        .flower1:nth-child(4){
+            border-radius: 0 50% 50% 50%;
+        }
+        /*flower2*/
+        .flower2{
+            float:left;
+            background-color: red;
+            margin:0;
+            padding:0;
+            width:50px;
+            height:50px;
+        }
+        .flower2:nth-child(1){
+            border-radius: 0 100% 0 100%;
+        }
+        .flower2:nth-child(2){
+            border-radius: 100% 0 100% 0;
+        }
+        .flower2:nth-child(3){
+            border-radius: 100% 0 100% 0;
+        }
+        .flower2:nth-child(4){
+            border-radius: 0 100% 0 100%;
+        }
+/*六边形*/
+        .six{
+            position: relative;
+            width:50px;
+            left: 24px;
+            height:100px;
+            background-color: black;
+        }
+        .six:before{
+            content:"";
+            position: absolute;
+            left: -24px;
+            border-right: 25px solid black;
+            border-top: 50px solid transparent;
+            border-bottom: 50px solid transparent;
+        }
+        .six:after{
+            content:"";
+            position: absolute;
+            left: 50px;
+            border-left: 25px solid black;
+            border-top: 50px solid transparent;
+            border-bottom: 50px solid transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="shape">
+    <div class="flower1"></div>
+    <div class="flower1"></div>
+    <div class="flower1"></div>
+    <div class="flower1"></div>
+</div>
+<div class="shape">
+    <div class="flower2"></div>
+    <div class="flower2"></div>
+    <div class="flower2"></div>
+    <div class="flower2"></div>
+</div>
+<div class="shape">
+    <div class="six"></div>
+</div>
+</body>
+</html>
