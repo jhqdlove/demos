@@ -1,0 +1,357 @@
+#bg{
+    margin:0;
+}
+
+.back{
+    background-color: #268DC9;
+}
+
+.backwhite{
+    background-color: white;
+}
+
+
+#header{
+    width:100%;
+    height:0;
+    overflow:hidden;
+}
+
+#body{
+    width:100%;
+    height:100%;
+    position:relative;
+    top:0;
+    left:0;
+}
+
+#footer{
+    width:100%;
+    height:0;
+    overflow:hidden;
+}
+
+
+#start{
+    display:none;
+    width:100%;
+    height:100%;
+    position:relative;
+    top:0;
+    left:0;
+}
+
+#start img{
+    width:62.5%;
+    margin:7.69%  18.75% 0;
+}
+
+#startdata{
+    width:100%;
+    margin:5% 0 0;
+}
+
+h1{
+    text-align: center;
+    font-size: 2em;
+    padding: 1em 0;
+    color:white;
+    text-shadow: 1px 1px 1px #000;
+}
+
+h2{
+    text-align: center;
+    font-size: 1.5em;
+    padding: 0.5em 0;
+    color:white;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.Copyright{
+	position:absolute;
+    width:100%;
+    left:0;
+    top:94%;
+    text-align:center;
+    font-size:1em;
+    color:#666666;
+    font-family:KaiTi;
+}
+
+
+#game{
+    display:none;
+    width:100%;
+    height:100%;
+    position:relative;
+    top:0;
+    left:0;
+}
+
+#gameheader{
+    width:100%;
+    height:10%;
+}
+
+#data{
+	color:white;
+	text-align:center;
+    width:100%;
+    height:5%;   
+}
+
+#data div{
+	float:left; 
+    font-size: 1.5em;
+    padding: 0.5em 0 0;
+}
+
+#level{
+	background-color: #70B7E0;
+    width:20%;
+    height:100%;
+}
+
+#date{
+	background-color: #70B7E0;
+    width:60%;
+    height:100%;
+}
+
+#time{
+	background-color: #70B7E0;
+    width:20%;
+    height:100%;
+}
+
+#data2{
+    color:black;
+	text-align:center;
+	margin:0 20%;
+    width:60%;
+    height:7%;
+}
+
+#data2 div{
+	font-size: 2em;
+    padding: 1em 0 0;
+	color:black;  
+}
+#data2 div *{
+	vertical-align:middle;  
+}
+#jiantou{
+	width:20%;
+}
+
+#data2 div img{
+	height:80%;  
+}
+
+#data3{
+	margin:5% 0 0;
+	color:black;
+	text-align:center;
+    width:100%; 
+    height:5%;
+}
+
+#data3 div{
+	float:left;
+	color:black; 
+	width:30%;
+	margin:1% 1%;
+    height:100%; 
+    font-size: 1.2em;
+    font-family:KaiTi;
+}
+
+
+#gamebody{
+	width:95%;
+	margin:0 2.5%;
+	height:45%;	
+	border-width:1px 0 0;
+    border-style:solid;
+    border-color:#666666;
+}
+
+#question p{	
+	font-size: 1.5em;
+    font-family:SimSun;
+    padding: 0.5em 0 0;
+    color:#666666;
+}
+
+#question span{	
+    color:red;
+}
+
+
+#picsall{
+    position:relative;
+    left:0;
+    top:0;
+	width:100%;
+	height:77%;
+	margin:1% 0;
+    border:1px solid #666666;
+}
+
+#picschk{
+	position:absolute;
+    left:0;
+    top:0;
+	width:100%;
+	height:100%;
+	z-index:1;
+}
+
+#picschk div{
+    width:22%;
+    height:50%;
+    margin:1% 0 0 2%;
+    float:left;
+}
+
+#picschk img{
+    width:98%;
+    margin:1%;
+}
+
+
+#pics{
+	position:absolute;
+    left:0;
+    top:0;
+	width:100%;
+	height:100%;
+}
+
+#pics div{
+    width:22%;
+    height:50%;
+    margin:1% 0 0 2%;
+    float:left;
+}
+
+#pics img{
+    width:98%;
+    margin:1%;
+}
+
+.checked{
+	/*background-color: #70B7E0;*/
+	  background-image:url(../images/checked.png);
+	  background-repeat:no-repeat;
+	  background-size:100% 100%;
+}
+
+
+
+#qiangpiao{
+    width:97%;
+    margin:2% 1.5% 0;
+	height:8%;
+	
+}
+
+
+
+#result{	
+    display:none;
+    width:100%;
+    height:100%;
+    position:relative;
+    top:0;
+    left:0;	
+}
+
+
+.zhuanfa{
+	position:absolute;
+    width:18.75%;
+    right:0;
+    top:0;
+    color:red;
+}
+.zhuanfa img{
+	width:100%;
+}
+
+#resultimg{
+	margin:10% 34.375% 0 ;
+	width:31.25%;
+}
+
+#resultdata p{
+    margin-top: 10%;
+	text-align: center;
+    font-size: 1.5em;
+    padding: 0.5em 0 0;
+    color:white;
+}
+
+.input{
+	width:43.75%;
+	margin:10% 28.125% 0;
+}
+
+#resultlogo{
+	margin:10% 40%;
+	width:20%;
+}
+
+
+
+#attention{	
+    display:none;
+    width:100%;
+    height:100%;
+    position:relative;
+    top:0;
+    left:0;	
+}
+
+#attheader{
+	text-align: center;
+    font-size: 2.5em;
+    padding: 1em 0;
+    color:white;
+    text-shadow: 1px 1px 1px #000;
+    font-family:KaiTi;
+}
+
+#content{
+	margin:0 3.125%;
+	width:93.75%;
+	height:60%;
+}
+
+#content div{
+	width:50%;
+	height:50%;
+	float:left;
+}
+
+#content div img{
+	width:80%;
+	margin:10% 10%;
+}
+
+#attdata1{
+	margin:auto 0;
+	text-align:left;
+}
+
+#attdata2{
+	margin:auto 0;
+	text-align:right;
+}
+
+#content p{
+    font-size:1.5em;
+    padding:1em 0 0;
+    color:white;
+}
+
