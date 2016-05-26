@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        div[id^="main"]{
+            margin:10px;
+        }
+        div[class^="main"]{
+            margin:10px;
+            padding: 20px;
+        }
+        img {
+            border: solid hsla(0,100%,50%,0.5) 2px;
+            padding:10px;
+            width: 90%;
+        }
+        p{
+            text-indent: 10px;
+        }
+        p:first-line{
+            font-weight: bolder;
+        }
+        p:first-letter {
+            font-size:300%;
+            font-weight:bold;
+            color:#000;
+        }
+        p:nth-child(1):first-letter{
+            float:left;
+        }
+        h1,h2{
+            text-align: center;
+        }
+    </style>
+</head>
+<h1>css3:多栏布局</h1>
+<h2>column多栏布局</h2>
+<style>
+    /*column*/
+    #main-column{
+        border: solid hsla(60,100%,50%,0.5) 1px;
+        -webkit-column-count: 4;
+        -moz-column-count: 4;
+        column-count: 4;
+
+        -moz-column-gap:20px;
+        -webkit-column-gap:20px;
+        column-gap:20px;
+
+        -moz-column-rule: 2px dashed hsla(60,100%,50%,0.5);
+        -webkit-column-rule: 2px dashed hsla(60,100%,50%,0.5);
+        column-rule: 2px dashed hsla(60,100%,50%,0.5);
+
+        -moz-column-break-before:always;
+        -moz-column-break-after:always;
+        -webkit-column-break-before:always;
+        -webkit-column-break-after:always;
+        column-break-before:always;
+        column-break-after:always;
+
+        -moz-column-fill:balance;
+        -webkit-column-fill:balance;
+        column-fill:balance;
+
+        padding: 10px;
+
+    }
+</style>
+<div id="main-column">
+    <p>
+        关关雎鸠，在河之洲。窈窕淑女，君子好逑。
+        参差荇菜，左右流之。窈窕淑女，寤寐求之。
+        求之不得，寤寐思服。悠哉悠哉，辗转反侧。
+        参差荇菜，左右采之。窈窕淑女，琴瑟友之。
+        参差荇菜，左右芼之。窈窕淑女，钟鼓乐之。
+    </p>
+        <img src="../image/images/sample1.jpg">
+    <p>
+        有狐绥绥，在彼淇梁。心之忧矣，之子无裳。
+        有狐绥绥，在彼淇厉。心之忧矣，之子无带。
+        有狐绥绥，在彼淇侧。心之忧矣，之子无服。
+    </p>
+    <img src="../image/images/sample3.jpg">
+</div>
+
+<h2>box多栏布局</h2>
+<style>
+    /*box*/
+    #main-box{
+        display:-webkit-box;
+        display:-moz-box;
+    }
+    #main-box>div{
+        -webkit-border-radius:5px;
+        -moz-border-radius:5px;
+        border-radius:5px;
+        border:hsla(60,100%,50%,0.5) 2px solid;
+        margin:0 5px;
+    }
+    #main-box .left,.right{
+        width:25%;
+        -webkit-box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        padding:20px;
+    }
+    #main-box .middle{
+        padding:20px;
+        -webkit-box-flex:1;
+        -moz-box-flex:1;
+        -webkit-box-ordinal-group:2;
+        -moz-box-ordinal-group:2;
+    }
+    #main-box .right {
+        -webkit-box-ordinal-group: 2;
+        -moz-box-ordinal-group: 2;
+    }
+
+</style>
+<div id="main-box">
+     <div class="middle">关关雎鸠，在河之洲。窈窕淑女，君子好逑。
+         参差荇菜，左右流之。窈窕淑女，寤寐求之。
+         求之不得，寤寐思服。悠哉悠哉，辗转反侧。
+         参差荇菜，左右采之。窈窕淑女，琴瑟友之。
+         参差荇菜，左右芼之。窈窕淑女，钟鼓乐之。</div>
+     <div class="left">有狐绥绥，在彼淇梁。心之忧矣，之子无裳。
+         有狐绥绥，在彼淇厉。心之忧矣，之子无带。
+         有狐绥绥，在彼淇侧。心之忧矣，之子无服。</div>
+     <div class="right"><img src="../image/images/sample3.jpg"></div>
+</div>
+
+<h2>flex多栏布局</h2>
+<style>
+    /*flex*/
+    #main-flex{
+        display: flex;
+        flex-direction: row;
+        flex-flow: nowrap;
+    }
+
+    #main-flex>div{
+        -webkit-border-radius:5px;
+        -moz-border-radius:5px;
+        border-radius:5px;
+        border:hsla(60,100%,50%,0.5) 2px solid;
+        margin:0 5px;
+    }
+
+    #main-flex .left{
+        padding:20px;
+        flex-grow: 1;
+    }
+
+    #main-flex .middle{
+        padding:20px;
+        flex-grow: 2;
+    }
+    #main-flex .right{
+        flex-basis: 25%;
+    }
+</style>
+<div id="main-flex">
+    <div class="left"> 关关雎鸠，在河之洲。窈窕淑女，君子好逑。
+        参差荇菜，左右流之。窈窕淑女，寤寐求之。
+        求之不得，寤寐思服。悠哉悠哉，辗转反侧。
+        参差荇菜，左右采之。窈窕淑女，琴瑟友之。
+        参差荇菜，左右芼之。窈窕淑女，钟鼓乐之。</div>
+    <div class="middle"> 有狐绥绥，在彼淇梁。心之忧矣，之子无裳。
+        有狐绥绥，在彼淇厉。心之忧矣，之子无带。
+        有狐绥绥，在彼淇侧。心之忧矣，之子无服。</div>
+    <div class="right"><img src="../image/images/sample3.jpg"></div>
+</div>
+
+<h1>css:多栏布局</h1>
+<h2>absolute+margin多栏布局</h2>
+<style>
+    .main-absolute {
+    border:hsla(60,100%,50%,0.5) 2px solid;
+    overflow:hidden;
+}
+    .flow-content {
+        margin-left: 150px;
+    }
+.main-absolute>img{
+    width:120px;
+    position:absolute;
+}
+</style>
+<div class="main-absolute">
+    <img src="../image/images/sample3.jpg">
+    <div class="flow-content">
+        关关雎鸠，在河之洲。窈窕淑女，君子好逑。
+        参差荇菜，左右流之。窈窕淑女，寤寐求之。
+        求之不得，寤寐思服。悠哉悠哉，辗转反侧。
+        参差荇菜，左右采之。窈窕淑女，琴瑟友之。
+        参差荇菜，左右芼之。窈窕淑女，钟鼓乐之。<br/>
+        <span style="color: red">!!!存在无法使父元素与绝对定位子元素高度的匹配</span><br/>
+        <span style="color: red">!!!存在无法使父元素与绝对定位子元素高度的匹配</span><br/>
+        <span style="color: red">!!!存在无法使父元素与绝对定位子元素高度的匹配</span>
+    </div>
+</div>
+
+<h2>float+overflow多栏布局</h2>
+<style>
+    .main-float{ border:hsla(60,100%,50%,0.5) 2px solid;overflow: hidden}
+   .main-float img{float: left;  margin-right: 20px;width: 120px}
+   .main-float div{overflow: hidden}
+</style>
+<div class="main-float">
+    <img src="../image/images/sample3.jpg">
+    <div>
+        关关雎鸠，在河之洲。窈窕淑女，君子好逑。
+        参差荇菜，左右流之。窈窕淑女，寤寐求之。
+        求之不得，寤寐思服。悠哉悠哉，辗转反侧。
+        参差荇菜，左右采之。窈窕淑女，琴瑟友之。
+        参差荇菜，左右芼之。窈窕淑女，钟鼓乐之。
+    </div>
+</div>
+
+
+</body>
+
+</html>
