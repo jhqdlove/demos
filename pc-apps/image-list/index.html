@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>图片展示</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-paginator.min.js"></script>
+</head>
+<body>
+<div id="center-image" class="hidden"><img/></div>
+<div class="container text-center">
+    <h1 class="text-center">图片展示列表</h1>
+    <ul id="example1"  class="text-center"></ul>
+    <div class="row table-head">
+        <div class="col-my-3">图片</div>
+        <div class="col-my-3">描述1</div>
+        <div class="col-my-3">描述2</div>
+        <div class="col-my-3">描述3</div>
+    </div>
+    <div class="item-table"></div>
+    <ul id="example2"  class="text-center"></ul>
+</div>
+
+<script>
+    var template = "<div class=\"row table-item\"><div class=\"col-my-3 col-img\"><img class=\"image-item\" src=\"$image_src\"></div> <div class=\"col-my-3 col-text\"><div class=\"des_table\"><div>$image_des1</div></div></div><div class=\"col-my-3 col-text\"><div class=\"des_table\"><div>$image_des2</div></div></div> <div class=\"col-my-3 col-text\"><div class=\"des_table\"><div>$image_des3</div></div></div></div>";
+    var page_image_num=20;
+    var image_sum = 50;
+    var current_page = 1;
+    var total_pages = 3;
+    //图片列表
+    var imagelist = [];
+    initPage();
+
+    function initPage(){
+        imagelist = new Array();
+        for(var i=0;i<image_sum;i++){
+            imagelist[i] = new Object();
+            imagelist[i]["image_src"] =  "images/sample"+(i%3+1)+".jpg";
+            imagelist[i]["image_des1"] = "描述1:"+i;
+            imagelist[i]["image_des2"] = "描述1:"+i;
+            imagelist[i]["image_des3"] = "描述1:"+i;
+        }
+        changePage();
+    }
+
+
+    function changePage(){
+        //更新选择框
+        changePaginator(current_page,total_pages);
+        //更新页面
+        changeImages();
+    }
+    function changePaginator(_current_page,_totalPages){
+        var options = {
+            currentPage: _current_page,
+            totalPages: _totalPages,
+            bootstrapMajorVersion:3,
+            onPageChanged: function(e,oldPage,newPage){
+                current_page = newPage;
+                changePage();
+            }
+        }
+        $('#example1').bootstrapPaginator(options);
+        $('#example2').bootstrapPaginator(options);
+    }
+    function changeImages(){
+        var begin = (current_page-1)*page_image_num;
+        $(".item-table .table-item").remove();
+        for(var i=begin;(i<begin+20)&&i<image_sum;i++)
+        {
+            var this_node = template.replace("$image_src", imagelist[i]["image_src"]).replace("$image_des1", imagelist[i]["image_des1"]).replace("$image_des2", imagelist[i]["image_des2"]).replace("$image_des3", imagelist[i]["image_des3"]);
+            $(this_node).appendTo(".item-table");
+        }
+    }
+
+    $("body").bind("click",
+            function(){
+                $("#center-image").addClass("hidden");
+            }
+    );
+    $("body").on("click","#center-image",
+            function(e){
+                e.preventDefault();
+                e.stopPropagation();
+            }
+    );
+
+    $(".container").on("click",".image-item", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var this_src = $(this).attr("src");
+        $("#center-image").find("img").attr("src",this_src);
+        $("#center-image").removeClass("hidden");
+        console.log(this_src);
+    });
+
+    $(".container").on("mouseover",".image-item", function(e){
+        e.preventDefault();
+        $(this).addClass("image-bigger");
+    });
+</script>
+</body>
+</html>

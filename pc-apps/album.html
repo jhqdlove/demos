@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../scripts/react/react.js"></script>
+    <script src="../scripts/react/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <title>金陵十二钗</title>
+    <style>
+
+        @font-face {
+            font-family: "iconfont";
+            src: url('../fonts/iconfont.eot?t=1464272482'); /* IE9*/
+            src: url('../fonts/iconfont.eot?t=1464272482#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('../fonts/iconfont.woff?t=1464272482') format('woff'), /* chrome, firefox */
+            url('../fonts/iconfont.ttf?t=1464272482') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+            url('../fonts/iconfont.svg?t=1464272482#iconfont') format('svg'); /* iOS 4.1- */
+        }
+
+        html,body{
+            width:100%;
+            height:100%;
+            background-color: #222;
+            margin:0;
+            padding:0;
+        }
+        .main{
+            width:100%;
+            height:100%;
+        }
+
+        .stage{
+            position: relative;
+
+            width: 100%;
+            height:100%;
+        }
+/*image -- start*/
+        .img-sec{
+            position: relative;
+
+            width: 100%;
+            height:100%;
+            overflow: hidden;
+            background-color: #ddd;
+        }
+
+        .img-figure{
+            position: absolute;
+            width:300px;
+            height:340px;
+            margin: 0;
+            padding:20px;
+            background-color: #fff;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition:all 1s ease-in-out 0s;
+        }
+
+        .img-figure.is-inverse{
+            transform: rotateY(180deg);
+        }
+
+
+        .img-figure img{
+            max-width: 100%;
+            max-height: 80%;
+       }
+        figcaption{
+            text-align: center;
+        }
+        figcaption .img-back{
+            opacity:0;
+            position:absolute;
+            left:0;
+            top:0;
+            box-sizing: border-box;
+            padding:20px;
+            background-color:  #fff;
+            z-index:1;
+            width:100%;
+            height:100%;
+
+            transform: rotateY(180deg);
+            transition:opacity 1s ease 0s;
+        }
+        .is-inverse .img-back{
+            opacity:1;
+        }
+        figcaption .img-title{
+            margin:20px 0 0 0;
+            color: #a7a0a2;
+            font-size:16px;
+        }
+        /*image -- end*/
+
+        .controller-nav{
+            position: absolute;
+            left: 0;
+            bottom: 30px;
+            z-index: 101;
+            width: 100%;
+            text-align: center;
+        }
+
+        .controller-nav .controller-unit{
+            display: inline-block;
+            margin: 0 5px;
+            width: 30px;
+            height:30px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-color: #aaa;
+            border-radius: 30px;
+            transform: scale(0.5);
+            transition: all 1s ease-in-out 0s;
+        }
+        .controller-nav .controller-unit.is-center{
+            background-color: #888;
+            transform: scale(1);
+
+        }
+        .controller-nav .controller-unit.is-center::after{
+            color:#fff;
+            font-family: iconfont;
+            line-height: 30px;
+            content: "\e618";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+
+        .controller-nav .controller-unit.is-center.is-inverse{
+            background-color: #555;
+            transform: rotateY(180deg);
+        }
+
+    </style>
+</head>
+<body>
+<div id="main" class="main">
+</div>
+</body>
+<script>
+    var baseUrl = "/demos/imgs/hlm/";
+    var imageUrls=[
+        {title:"林黛玉",imageURL:baseUrl+"hlm_ldy.jpg",desc:"可叹停机德，堪怜咏絮才。玉带林中挂，金簪雪里埋。"},
+        {title:"薛宝钗",imageURL:baseUrl+"hlm_xbc.jpg",desc:"可叹停机德，堪怜咏絮才。玉带林中挂，金簪雪里埋。"},
+        {title:"贾元春",imageURL:baseUrl+"hlm_jyc.jpg",desc:"二十年来辨是非，榴花开处照宫闱。三春怎及初春景，虎兔相逢大梦归。"},
+        {title:"贾探春",imageURL:baseUrl+"hlm_jtc.jpg",desc:"才自精明志自高，生于末世运偏消。清明涕送江边望，千里东风一梦遥。"},
+        {title:"史湘云",imageURL:baseUrl+"hlm_sxy.jpg",desc:"富贵又何为，襁褓之间父母违。转眼吊斜晖，湘江水逝楚云飞。"},
+        {title:"妙玉",imageURL:baseUrl+"hlm_my.jpg",desc:"欲洁何曾洁，云空未必空。可怜金玉质，终陷淖泥中。"},
+        {title:"贾迎春",imageURL:baseUrl+"hlm_jyc2.jpg",desc:"子系中山狼，得志便猖狂。金闺花柳质，一载赴黄粱。"},
+        {title:"贾惜春",imageURL:baseUrl+"hlm_jxc.jpg",desc:"勘破三春景不长，缁衣顿改昔年妆。可怜绣户侯门女，独卧青灯古佛旁。"},
+        {title:"王熙凤",imageURL:baseUrl+"hlm_wxf.jpg",desc:"凡鸟偏从末世来，都知爱慕此生才。一从二令三人木，哭向金陵事更哀。"},
+        {title:"贾巧姐",imageURL:baseUrl+"hlm_jqj.jpg",desc:"势败休云贵，家亡莫论亲。偶因济村妇，巧得遇恩人。"},
+        {title:"李纨",imageURL:baseUrl+"hlm_lz.jpg",desc:"桃李春风结子完，到头谁似一盆兰。如冰水好空相妒，枉与他人作笑谈。"},
+        {title:"秦可卿",imageURL:baseUrl+"hlm_qkq.jpg",desc:"情天情海幻情身，情既相逢必主淫。漫言不肖皆荣出，造衅开端实在宁。"}
+    ];
+</script>
+
+<script type="text/babel">
+//获取随机值
+    function getRangeRandom(low,high){
+        return Math.ceil(Math.random()*(high-low)+low);
+    }
+//获取-30~30度的任意角度
+    function get30DegRandom(){
+        return (Math.random()>0.5?'':'-')+Math.ceil(Math.random()*30);
+    }
+//图片组件
+var ImgFigure = React.createClass({
+    handleClick:function(e){
+    console.log(" handleClick");
+    if(this.props.arrange.isCenter){
+        this.props.inverse();
+    }else{
+     this.props.center();
+    }
+
+        e.stopPropagation();
+        e.preventDefault();
+    },
+    render:function(){
+        //位置信息
+        var styleObj = {};
+        if(this.props.arrange.pos){
+            styleObj = this.props.arrange.pos;
+        }
+        if(this.props.arrange.rotate){
+        (['Moz','ms','Webkit','']).forEach(function(value){
+         styleObj[value+'transform']='rotate('+this.props.arrange.rotate+'deg)';
+        }.bind(this))
+        }
+        if(this.props.arrange.isCenter){
+            styleObj['zIndex']=11;
+        }
+        var imgFigureClassName = "img-figure" + (this.props.arrange.isInverse?' is-inverse':'');
+        //组件信息
+        return (
+            <figure className={imgFigureClassName} style={styleObj} onClick={this.handleClick}>
+                <img src={this.props.data.imageURL} alt={this.props.data.title}/>
+                <figcaption>
+                <h2 className="img-title">{this.props.data.title}</h2>
+                <div className="img-back" onClick={this.handleClick}>
+                    <p>{this.props.data.desc}</p>
+                </div>
+                </figcaption>
+            </figure>
+        );
+    }
+});
+
+var ControllerUnit = React.createClass({
+    handleClick:function(e){
+        if(this.props.arrange.isCenter){
+            this.props.inverse();
+        }else{
+            this.props.center();
+        }
+        e.stopPropagation();
+        e.preventDefault();
+    },
+    render:function(){
+        var className = "controller-unit";
+        if(this.props.arrange.isCenter){
+             className+=" is-center";
+        }
+        if(this.props.arrange.isInverse){
+             className+=" is-inverse";
+        }
+        return(
+            <span className={className} onClick={this.handleClick}></span>
+        );
+       }
+});
+
+//应用组件
+var App = React.createClass({
+    //图片区域信息初始化
+    Constant:{
+        centerPos:{
+            left:0,
+            right:0
+        },
+        hPosRange:{
+            leftX:[0,0],
+            rightX:[0,0],
+            y:[0,0]
+        },
+        vPosRange:{
+            x:[0,0],
+            topY:[0,0]
+        }
+    },
+//反转图片
+inverse:function(index){
+    return function(){
+    console.log("inverse"+index);
+        var imgsArrangeArr = this.state.imgsArrangeArr;
+
+        imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
+
+        this.setState({
+            imgsArrangeArr:imgsArrangeArr
+        });
+    }.bind(this);
+},
+//居中图片
+center:function(index){
+    return function(){
+    console.log("center"+index);
+        this.reArrange(index);
+    }.bind(this);
+},
+//图片重新排布
+    reArrange:function(centerIndex){
+    //位置范围信息初始化
+        var imgsArrangeArr = this.state.imgsArrangeArr,
+            Constant = this.Constant,
+            centerPos = Constant.centerPos,
+
+            hPosRange =  Constant.hPosRange,
+            hPosRangeLeftX =  hPosRange.leftX,
+            hPosRangeRightX =  hPosRange.rightX,
+            hPosRangeY =  hPosRange.y,
+
+            vPosRange =  Constant.vPosRange,
+            vPosRangeTopY =  vPosRange.topY,
+            vPosRangeX =  vPosRange.x;
+
+        //居中图片提取与位置定义
+        var imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex,1);
+        imgsArrangeCenterArr[0]={
+            pos:centerPos,
+            rotate:0,
+            isInverse:false,
+            isCenter:true
+            };
+
+        //顶部图片个数与提取
+        var topImgNum = Math.floor(Math.random()*2),
+            topImgSpliceIndex = Math.ceil(Math.random()*(imgsArrangeArr.length - topImgNum));
+        var imgsArrangeTopArr = imgsArrangeArr.splice(topImgSpliceIndex,topImgNum);
+
+        //顶部图片位置随机
+        imgsArrangeTopArr.forEach(function(value,index){
+            imgsArrangeTopArr[index]={
+            pos:{
+                top:getRangeRandom(vPosRangeTopY[0],vPosRangeTopY[1]),
+                left:getRangeRandom(vPosRangeX[0],vPosRangeX[1])
+                },
+            rotate:get30DegRandom(),
+            isInverse:false,
+            isCenter:false
+            };
+
+        console.log(imgsArrangeTopArr[index].pos.top+" "+imgsArrangeTopArr[index].pos.left);
+        });
+
+         //左侧和右侧图片位置随机
+           for(var i=0,j=imgsArrangeArr.length,k=j/2;i<j;i++){
+            var hPosRangeLORX=null;
+            if(i<k){
+                hPosRangeLORX = hPosRangeLeftX;
+            }else{
+                hPosRangeLORX = hPosRangeRightX;
+            }
+           imgsArrangeArr[i]={
+           pos:{
+            top:getRangeRandom(hPosRangeY[0],hPosRangeY[1]),
+            left:getRangeRandom(hPosRangeLORX[0],hPosRangeLORX[1])
+           },
+           rotate:get30DegRandom(),
+           isInverse:false,
+           isCenter:false
+           }
+           }
+
+           if(imgsArrangeTopArr && imgsArrangeTopArr[0]){
+            imgsArrangeArr.splice(topImgSpliceIndex,0,imgsArrangeTopArr[0]);
+           }
+
+           imgsArrangeArr.splice(centerIndex,0,imgsArrangeCenterArr[0]);
+
+           this.setState({
+             imgsArrangeArr:imgsArrangeArr
+           });
+    },
+    getInitialState:function(){
+        return{
+           imgsArrangeArr:[
+                {
+                    pos:{
+                        left:100,
+                        top:100
+                    },
+                    rotate:0,
+                    isInverse:false,
+                    isCenter:false
+                }
+            ]
+        }
+    },
+    //组件加载后为每张图片加载位置范围
+    componentDidMount:function(){
+        console.log('componentDidMount');
+        var stageDOM = ReactDOM.findDOMNode(this.refs.stage),
+            stageW = stageDOM.scrollWidth,
+            stageH = stageDOM.scrollHeight,
+            halfStageW = Math.ceil(stageW/2),
+            halfStageH = Math.ceil(stageH/2);
+
+            var imgFigureDom = ReactDOM.findDOMNode(this.refs.imgFigure0),
+                imgW = imgFigureDom.scrollWidth,
+                imgH = imgFigureDom.scrollHeight,
+                halfImgW = Math.ceil(imgW/2),
+                halfImgH = Math.ceil(imgH/2);
+
+         console.log(halfStageW+" "+halfStageH+" "+halfImgW+" "+halfImgH);
+
+            this.Constant.centerPos={
+                left:halfStageW-halfImgW,
+                top:halfStageH-halfImgH
+            }
+            //计算左侧右侧图片位置排布范围
+            this.Constant.hPosRange.leftX[0]=-halfImgW;
+            this.Constant.hPosRange.leftX[1]=halfStageW-halfImgW*3;
+            this.Constant.hPosRange.rightX[0]=halfStageW+halfImgW;
+            this.Constant.hPosRange.rightX[1]=stageW-halfImgW;
+            this.Constant.hPosRange.y[0]=-halfImgH;
+            this.Constant.hPosRange.y[1]=stageH-halfImgH;
+            //计算上方图片位置排布范围
+            this.Constant.vPosRange.topY[0]=-halfImgH;
+            this.Constant.vPosRange.topY[1]=halfStageH-halfImgH*3;
+            this.Constant.vPosRange.x[0]=halfStageW-imgW;
+            this.Constant.vPosRange.x[1]=halfStageW;
+             //图片排布
+            this.reArrange(0);
+    },
+    render: function() {
+        console.log('render');
+        var contollerUnits=[];
+        var imgFigures=[];
+        for(var index=0;index<imageUrls.length;index++){
+         if(!this.state.imgsArrangeArr[index]){
+                this.state.imgsArrangeArr[index]= {
+                    pos:{
+                        left:0,
+                        top:0
+                    },
+                    rotate:0,
+                    isInverse:false,
+                    isCenter:false
+                }
+            }
+            imgFigures.push(<ImgFigure data={imageUrls[index]} key={'imgFigure'+index} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
+            contollerUnits.push(<ControllerUnit key={'controllerUnit'+index}  arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
+        }
+        return (
+        <section className="stage" ref="stage">
+            <section className="img-sec">
+            {imgFigures}
+            </section>
+            <nav className="controller-nav">
+            {contollerUnits}
+            </nav>
+         </section>
+        );
+    }
+})
+
+
+
+ReactDOM.render(
+  <App/>,
+  document.getElementById('main')
+);
+</script>
+</html>

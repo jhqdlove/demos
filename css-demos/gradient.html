@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>渐变花纹</title>
+    <style>
+        div{
+            float: left;
+            width:200px;
+            height:200px;
+            margin:10px;
+        }
+
+        div:nth-child(1){
+            background:
+            radial-gradient(circle at 0% 50%, rgba(0, 0, 0, 0) 9px,  white 10px, rgba(0, 0, 0, 0) 11px) 0px 10px,
+            radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0) 9px, white 10px, rgba(0, 0, 0, 0) 11px),
+            deepskyblue;
+            background-size: 20px 20px;
+        }
+        div:nth-child(2){
+            background:
+            linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
+            linear-gradient(63deg, transparent 74%, #999 78%),
+            linear-gradient(63deg, transparent 34%, #999 38%, #999 58%, transparent 62%),
+            #444;
+            background-size: 16px 48px;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<div></div>
+</body>
+</html>

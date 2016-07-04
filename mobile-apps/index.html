@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+    <title>游戏列表</title>
+    <link  rel="stylesheet" href="/demos/stylesheets/reset.css" type="text/css">
+<style>
+    html,body{
+        width:100%;
+        height:100%;
+        background-color:#fff;
+    }
+    /* 超小设备（手机，小于 768px） */
+    #body{
+        width:100%;
+        height:100%;
+        position:relative;
+        top:0;
+        left:0;
+        background-color:#fff;
+    }
+
+    /* 小型设备（平板电脑，768px 起） *//* 中型设备（台式电脑，992px 起） *//* 大型设备（大台式电脑，1200px 起） */
+    @media (min-width:768px) {
+        #body{
+            width:768px;
+            margin:0 calc((100% - 768px)/2);
+        }
+    }
+    header{
+        width:100%;
+    }
+    header img{
+        width:100%;
+    }
+    ul{
+        width:90%;
+        margin:5%;
+    }
+    .testitem{
+        position: relative;
+        top:0;
+        left:0;
+        margin:3px 0;
+        width:100%;
+        height: 80px;
+        border-bottom: solid 1px gray;
+        float:left;
+    }
+    .testitem img{
+        float:left;
+        margin:10px 0;
+        border-radius: 9px;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        width: 60px;
+    }
+    .testitem .text{
+        margin:10px;
+        float:left;
+    }
+    .testitem .text h1{
+        line-height:18px;
+        font-size:15px;
+    }
+    .testitem .text p{
+        line-height:15px;
+        font-size:12px;
+    }
+    .testitem a{
+        position:absolute;
+        right:10px;
+        top:20px;
+        width:60px;
+        height:20px;
+        float:right;
+        display: block;
+        border:solid 1px pink;
+        border-radius: 5px;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        color:pink;
+        font-size:12px;
+        line-height: 24px;
+        text-align: center;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- 微信分享图片：抓取第一张大于300×300的,display不为none的图片-->
+<div  style="width:0px; height:0px; overflow:hidden"><img src="list-share.jpg" ></div>
+
+<!--实体部分 begin -->
+<div id="body">
+
+    <!-- 头部 begin -->
+    <header>
+        <img src="header.jpg" >
+    </header>
+    <!-- 头部 end -->
+
+
+    <!--中间部分 begin -->
+    <ul>
+        <li  class="testitem">
+            <img src="oscars/share.jpg">
+            <div class="text">
+                <h1>奥斯卡</h1>
+                <p>小李子终于得到奥斯卡了</p>
+                <p>你也有哦，快来获得</p>
+            </div>
+            <a href="oscars/index.html">获取>></a>
+        </li>
+        <li  class="testitem">
+            <img src="turkey/images/share.jpg">
+            <div class="text">
+                <h1>圣诞节</h1>
+                <p>必须接火鸡</p>
+                <p>你能来几只？</p>
+            </div>
+            <a href="turkey/index.html">获取>></a>
+        </li>
+        <li  class="testitem">
+            <img src="finder/head.png">
+            <div class="text">
+                <h1>寻找王大陆</h1>
+                <p>撞脸好尴尬</p>
+                <p>你能找到几个王大陆</p>
+            </div>
+            <a href="finder/index.html">获取>></a>
+        </li>
+        <li  class="testitem">
+            <img src="ticket/images/game12306/12306logo.png">
+            <div class="text">
+                <h1>12306抢票</h1>
+                <p>体验一下12306的验证码</p>
+                <p>你能抢到几张火车票</p>
+            </div>
+            <a href="ticket/index.html">获取>></a>
+        </li>
+    </ul>
+    <!--中间部分 end -->
+
+</div>
+
+
+
+
+
+</body>
+</html>
