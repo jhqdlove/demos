@@ -3,11 +3,11 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>图片展示</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../stylesheets/bootstrap.min.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
-    <script src="js/jquery-1.12.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-paginator.min.js"></script>
+    <script src="../../scripts/jquery/jquery-1.12.1.min.js"></script>
+    <script src="../../scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="../../scripts/bootstrap/bootstrap-paginator.min.js"></script>
 </head>
 <body>
 <div id="center-image" class="hidden"><img/></div>
@@ -32,9 +32,8 @@
     var total_pages = 3;
     //图片列表
     var imagelist = [];
-    initPage();
 
-    function initPage(){
+    (function initPage(){
         imagelist = new Array();
         for(var i=0;i<image_sum;i++){
             imagelist[i] = new Object();
@@ -44,7 +43,7 @@
             imagelist[i]["image_des3"] = "描述1:"+i;
         }
         changePage();
-    }
+    })()
 
 
     function changePage(){

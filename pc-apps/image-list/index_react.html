@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>图片展示</title>
+    <link href="../../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <script src="../../scripts/react/react.js"></script>
+    <script src="../../scripts/react/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+<div id="container" class="container text-center">
+</div>
+
+<script type="text/babel">
+
+    var TableHeader = React.createClass({
+        render: function () {
+            return (<div>
+                <h1 className="text-center">图片展示列表</h1>
+                <div className="row table-head">
+                    <div className="col-my-3">图片</div>
+                    <div className="col-my-3">描述1</div>
+                    <div className="col-my-3">描述2</div>
+                    <div className="col-my-3">描述3</div>
+                </div>
+            </div>)
+        }
+    })
+
+    var ShowTable = React.createClass({
+        render: function () {
+            var showState = this.props.showState ? "show" : "hidden";
+            var showItem = this.props.showItem;
+            return <div id="center-image" className={showState} >
+                <img src = {this.props.data[showItem].imageSrc}/>
+            </div>;
+        }
+    });
+    var Item = React.createClass({
+        render: function () {
+            return (<div className="row table-item" >
+                        <div className="col-my-3 col-img" onClick = {this.props.onClick}>
+                            <img className="image-item" src={this.props.data.imageSrc}/>
+                        </div>
+                        <div className="col-my-3 col-text">
+                            <div className="des_table">
+                                <div>{this.props.data.imageDes1}</div>
+                            </div>
+                        </div>
+                        <div className="col-my-3 col-text">
+                            <div className="des_table">
+                                <div>{this.props.data.imageDes2}</div>
+                            </div>
+                        </div>
+                        <div className="col-my-3 col-text">
+                            <div className="des_table">
+                                <div>{this.props.data.imageDes3}</div>
+                            </div>
+                        </div>
+                    </div>
+
+            );
+        }
+    });
+
+
+    var App = React.createClass({
+        createData: function (num) {
+            console.log("before:" + this.state);
+            var data = (this.state && this.state.data) ? this.state.data : [];
+            var start = data.length,end=start+num;
+
+            for (var i = data.length; i < end; i++) {
+                data.push({
+                    imageSrc: "images/sample" + (i % 3 + 1) + ".jpg",
+                    imageDes1: i,
+                    imageDes2: i,
+                    imageDes3: i
+                });
+            }
+            return data;
+        },
+
+        handleClickBlock: function (item) {
+            return function(e){
+                console.log("click " + item);
+                e.stopPropagation();
+                this.setNewState({showState:true,showItem:item});
+            }.bind(this)
+        },
+        handleClickOther:function(){
+            this.setNewState({showState:false});
+        },
+        handleScroll:function(){
+            var scrollTop = document.body.scrollTop,scrollHeight=document.body.scrollHeight,clientHeight = document.documentElement.clientHeight;
+            if(scrollTop+clientHeight-scrollHeight>-10){
+                var data = this.createData(1);
+                this.setNewState({data:data});
+            }
+        },
+        setNewState:function(obj){
+            var keys = Object.keys(obj);
+            var newState = this.state;
+            for(var i = 0; i < keys.length; i++){
+                newState[keys[i]] = obj[keys[i]];
+            }
+            this.setState(newState);
+        },
+        getInitialState: function () {
+            var data = this.createData(10);
+            return {
+                data:data,
+                showState:false,
+                showItem:0
+            };
+        },
+        getList:function(){
+            var items=[];
+            for(var i=0;i<this.state.data.length;i++){
+                items.push(<Item data = {this.state.data[i]} key={i} onClick={this.handleClickBlock(i)}></Item>);
+            }
+            return items;
+        },
+        render: function () {
+            var items =  this.getList();
+            console.log(items);
+            return (<div onWheel={this.handleScroll} onClick={this.handleClickOther}>
+                <ShowTable showState = {this.state.showState} showItem = {this.state.showItem} data = {this.state.data}></ShowTable>
+                <TableHeader></TableHeader>
+                {items}
+            </div>);
+        }
+    });
+
+    ReactDOM.render(
+            <App/>,
+            document.getElementById('container')
+    );
+
+</script>
+</body>
+</html>
