@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>图片展示</title>
+    <link href="../../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <script src="../../scripts/react/react.js"></script>
+    <script src="../../scripts/react/react-dom.js"></script>
+    <script src="../../scripts/redux/redux.js"></script>
+    <script src="../../scripts/redux/react-redux.js"></script>
+    <script src="../../scripts/browser/browser.min.js"></script>
+</head>
+<body>
+<div id="container" class="container text-center">
+</div>
+
+<script type="text/babel">
+
+    var TableHeader = React.createClass({
+        render: function () {
+            return (<div>
+                <h1 className="text-center">图片展示列表</h1>
+                <div className="row table-head">
+                    <div className="col-my-5">图片</div>
+                    <div className="col-my-5">描述</div>
+                </div>
+            </div>)
+        }
+    })
+
+    var ShowTable = React.createClass({
+        handleClick:function(e){
+            e.stopPropagation() ;
+            e.preventDefault();
+        },
+        render: function () {
+            var show= this.props.show ? "flex_center" : "hidden";
+            var item = this.props.item;
+            return <div id="center-image" className={show} onClick={this.handleClick}>
+                <img src={item}/>
+            </div>;
+        }
+    });
+
+    var Item = React.createClass({
+        handleClick:function(e){
+            e.stopPropagation() ;
+            e.preventDefault();
+            store.dispatch({type:"click_image",imgSrc:this.props.data.imgSrc});
+        },
+        render: function () {
+            return (<div className="row table-item">
+                        <div className="col-my-5 col-img" onClick={this.handleClick}>
+                            <img className="image-item" src={this.props.data.imgSrc}/>
+                        </div>
+                        <div className="col-my-5 col-text">
+                            <div className="des_table">
+                                <div>{this.props.data.imageDes}</div>
+                            </div>
+                        </div>
+                    </div>
+
+            );
+        }
+    });
+
+
+    var App = React.createClass({
+        handleClick: function () {
+            store.dispatch({type:"click_other"});
+        },
+        handleScroll: function () {
+            var scrollTop = this.dom.scrollTop, scrollHeight = this.dom.scrollHeight, clientHeight = this.dom.clientHeight;
+            if (scrollTop + clientHeight - scrollHeight > -10) {
+                store.dispatch({type:"add"});
+            }
+        },
+        componentDidMount: function () {
+            this.dom = ReactDOM.findDOMNode(this);
+            store.dispatch({type:"init"});
+        },
+        render: function () {
+            var datas = this.props.pageList.data , showItem = this.props.showItem;
+            var styleObj = {overflowY: "scroll", height: "100%"};
+            console.log(datas);
+            return (
+                    <div style={styleObj} onScroll={this.handleScroll} onClick={this.handleClick}>
+                        <ShowTable show={showItem.show} item={showItem.imgSrc}
+                                   data={datas}></ShowTable>
+                        <TableHeader></TableHeader>
+                       {datas.map(function(value,index) {
+                           return <Item key={index} data={value}></Item>;
+                       })}
+                    </div>);
+        }
+    });
+
+
+/*数据生成*/
+    function createData(start, num) {
+        var data = [];
+        var end = start + num;
+        for (var i = start; i < end; i++) {
+            data.push({
+                imgSrc:"images/sample" + (i % 3 + 1) + ".jpg",
+                imageDes: i,
+            });
+        }
+        return data;
+    }
+
+/*初始状态*/
+    var initState = {
+        pageList: {
+            data: []
+        },
+        showItem: {
+            imgSrc: "",
+            show: false
+        }
+    }
+/*reducer: action + state => state*/
+    var pageList = function (state, action) {
+        if (!state || !state.data) {
+            return {data: []}
+        }
+        switch (action.type) {
+            case "init":
+                return {
+                    data: createData(0, 10)
+                }
+            case "add":
+                var len = state.data.length;
+                return {
+                    data: state.data.concat(createData(len, 1))
+                }
+            default:
+                return state;
+        }
+    }
+
+    var showItem = function (state, action) {
+        var preSrc = state && state.imgSrc ? state.imgSrc : "";
+
+        switch (action.type) {
+            case "click_image":
+                return {
+                    imgSrc: action.imgSrc,
+                    show: true
+                }
+            case "click_table":
+                return {
+                    imgSrc: preSrc,
+                    show: true
+                }
+            default:
+                return {
+                    imgSrc: preSrc,
+                    show: false
+                }
+        }
+    }
+
+    //reducer合并
+    var reducers = redux.combineReducers(
+            {
+                pageList: pageList,
+                showItem: showItem
+            });
+
+    /*privoder store getState = > children props*/
+    var mapStateToProps = function(state){
+        return {
+            pageList: state.pageList,
+            showItem: state.showItem
+        };
+    };
+
+    var ActionCreators = function(type,imageSrc){
+        return {
+            type:type,
+            imageSrc:imageSrc
+        }
+    }
+
+
+    /*create*/
+    var store = redux.createStore(reducers,initState);
+    var Provider = ReactRedux.Provider;
+    var App = ReactRedux.connect(mapStateToProps)(App);
+    ReactDOM.render(
+            <Provider store={store}>
+                <App/>
+            </Provider>, document.getElementById('container')
+    );
+
+</script>
+</body>
+</html>

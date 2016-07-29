@@ -94,6 +94,14 @@
             this.setNewState({showState:false});
         },
         handleScroll:function(){
+            var dom = ReactDOM.findDOMNode(this.refs.app);
+            var scrollTop = dom.scrollTop,scrollHeight=dom.scrollHeight,clientHeight = dom.clientHeight;
+            if(scrollTop+clientHeight-scrollHeight>-10){
+                var data = this.createData(1);
+                this.setNewState({data:data});
+            }
+        },
+        handleWindowScroll:function(){
             var scrollTop = document.body.scrollTop,scrollHeight=document.body.scrollHeight,clientHeight = document.documentElement.clientHeight;
             if(scrollTop+clientHeight-scrollHeight>-10){
                 var data = this.createData(1);
@@ -125,8 +133,12 @@
         },
         render: function () {
             var items =  this.getList();
+            var styleObj = {};
+            styleObj["overflowY"] = "scroll";
+            styleObj["overflowX"] = "hidden";
+            styleObj["height"] = "100%";
             console.log(items);
-            return (<div onWheel={this.handleScroll} onClick={this.handleClickOther}>
+            return (<div onScroll ={this.handleScroll} style={styleObj} onClick={this.handleClickOther} ref="app">
                 <ShowTable showState = {this.state.showState} showItem = {this.state.showItem} data = {this.state.data}></ShowTable>
                 <TableHeader></TableHeader>
                 {items}
