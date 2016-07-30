@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>按钮制作</title>
+    <link href="../../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="css/mybuttons.css" rel="stylesheet">
+    <link href="css/buttons.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>我的应用</h1>
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">HOME</a>
+        </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">button</a></li>
+            </ul>
+    </div>
+    <div class="row">
+       <div class="col-lg-4 col-md-4 col-sm-4">
+           <div class="button-list">
+               <div class="row">
+                   <div class="col-lg-6 col-md-6 col-sm-6">
+                       <div class="list-container">
+                           <a class="button">Go</a>
+                       </div>
+                       <div class="list-container">
+                           <a class="button button-royal">Go</a>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-md-6 col-sm-6">
+                       <div class="list-container">
+                           <a class="button button-primary">Go</a>
+                       </div>
+                       <div class="list-container">
+                           <a class="button button-caution">Go</a>
+                       </div>
+                   </div>
+               </div>
+               <div class="row">
+                   <div class="col-lg-6 col-md-6 col-sm-6">
+                       <div class="list-container">
+                           <a class="button button-raised">Go</a>
+                       </div>
+                       <div class="list-container">
+                           <a class="button button-raised button-royal">Go</a>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-md-6 col-sm-6">
+                       <div class="list-container">
+                           <a class="button button-raised button-primary">Go</a>
+                       </div>
+                       <div class="list-container">
+                           <a class="button button-raised button-caution">Go</a>
+                       </div>
+                   </div>
+               </div>
+               <div class="row">
+                       <div class="col-lg-6 col-md-6 col-sm-6">
+                           <div class="list-container">
+                               <a class="button button-3d">Go</a>
+                           </div>
+                           <div class="list-container">
+                               <a class="button button-3d button-royal">Go</a>
+                           </div>
+                       </div>
+                       <div class="col-lg-6 col-md-6 col-sm-6">
+                           <div class="list-container">
+                               <a class="button button-3d button-primary">Go</a>
+                           </div>
+                           <div class="list-container">
+                               <a class="button button-3d button-caution">Go</a>
+                           </div>
+                   </div>
+              </div>
+
+           </div>
+       </div>
+       <div class="col-lg-5">
+           <div class="layer">
+               <div class="canvas">
+                   <div id="theone_wrapper">
+               <input type="button" id="theone" value="GO" />
+                   </div>
+               </div>
+           </div>
+           <div class="layer css-out" id="css_text">
+
+           </div>
+
+       </div>
+       <div class="col-lg-3">
+           <div class="bgcbox">
+               <lable>按钮宽度:<span id="width-span"></span></lable><input type="range" id="width" class="form-control rangebox"  min="50" max="150" step="1" value="100"/>
+               <lable>按钮高度:<span id="height-span"></span></lable><input type="range" id="height" class="form-control rangebox"  min="50" max="150" step="1" value="40"/>
+           </div>
+
+           <div class="bgcbox">
+               <lable>背景色</lable><input type="text" id="bgc" class="form-control colorbox" data-position="top left" value="#fff"/>
+               <lable>背景渐变1</lable><input type="text" id="bgc1" class="form-control colorbox" data-position="top left" value="#fff"/>
+               <lable>背景渐变2</lable><input type="text" id="bgc2" class="form-control colorbox" data-position="top left" value="#fff"/>
+           </div>
+           <div class="bgcbox">
+               <lable>按钮边框颜色</lable><input type="text" id="border-color" class="form-control colorbox" data-position="top left" value="#fff"/>
+               <lable>按钮边框圆角:<span id="border-radius-span"></span></lable><input type="range" id="border-radius" class="form-control rangebox"  min="0" max="100" step="1" value="0"/>
+               <lable>按钮边框大小:<span id="border-color-size-span"></span></lable><input type="range" id="border-color-size" class="form-control rangebox" min="0" max="50" step="1"  value="1"/>
+           </div>
+
+       </div>
+    </div>
+</div>
+<script src="../../scripts/jquery/jquery-1.12.1.min.js"></script>
+<script src="../../scripts/bootstrap/bootstrap.min.js"></script>
+<link href="minicolors/jquery.minicolors.css" rel="stylesheet">
+<script src="minicolors/jquery.minicolors.min.js"></script>
+<script src="js/mybuttons.js"></script>
+<script>
+
+
+
+</script>
+</body>
+</html>
