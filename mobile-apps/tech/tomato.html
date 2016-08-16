@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tech demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no,minimal-ui"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="author" content="Tencent..gavinning"/>
+    <meta name="copyright" content="Copyright (c) 1998-2012 Tencent."/>
+    <meta name="description" content="手机腾讯网"/>
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-page-mode" content="no-title">
+    <script>
+        (function () {
+            var baseFontSize = 100;
+            var baseWidth = 320;
+            var clientWidth = document.documentElement.clientWidth || window.innerWidth;
+            var clientHeight = document.documentElement.clientHeight || window.innerHeight;
+            var isPortrai = true;
+            if (window.orientation) {
+                isPortrai = (window.orientation == 0 || window.orientation == 180) ? true : false;
+            }
+            clientWidth = isPortrai ? clientWidth : clientHeight;
+            var innerWidth = Math.max(Math.min(clientWidth, 480), 320);
+            var rem = 100;
+            if (innerWidth > 362 && innerWidth <= 375) {
+                rem = Math.floor(innerWidth / baseWidth * baseFontSize * 0.9);
+            }
+            if (innerWidth > 375) {
+                rem = Math.floor(innerWidth / baseWidth * baseFontSize * 0.84);
+            }
+            window.__baseREM = rem;
+            document.querySelector('html').style.fontSize = rem + 'px';
+        }());
+    </script>
+    <link rel="stylesheet" href="static/demo.css"/>
+</head>
+<body>
+<div id="wrapper" class="ios">
+    <style>
+        .btns {
+            position: fixed;
+            width:100%;
+            bottom: 0;
+            padding: 0.1rem;
+        }
+
+        .btns .btn {
+            display: inline-block;
+            width: 0.8rem;
+            height: 0.8rem;
+            margin: 0.2rem;
+            text-align: center;
+        }
+
+        .btn span {
+            display: inline-block;
+            width: 0.6rem;
+            height: 0.6rem;
+        }
+
+        span.tomato {
+            background-image: url("static/images/game_tomato.png");
+            background-repeat: no-repeat;
+        }
+        .tomato1{
+            background-size: 1.2rem 1.2rem;
+            background-position: -0.4rem -0.65rem;
+        }
+        .tomato2{
+            background-size: 0.9rem 0.9rem;
+            background-position: 0.21rem 0rem;
+        }
+
+        .tomato3{
+            background-size: 0.9rem 0.9rem;
+            background-position: -0.38rem 0.115rem;
+        }
+    </style>
+
+    <div class="btns">
+        <div class="btn">
+            <span></span>
+            <p>回复</p>
+        </div>
+        <div class="btn">
+            <span></span>
+            <p>散花</p>
+        </div>
+        <div class="btn b-tomato">
+            <span class="tomato tomato1"></span>
+            <p>扔番茄</p>
+        </div>
+    </div>
+</div>
+<script src="js/mods/zepto.min.js"></script>
+<script src="js/mods/anime.js"></script>
+<script>
+    $(".btns:nth-child(2)").click(
+            function () {
+                var elm = document.createElement("span");
+                elm.className = "tomato tomato1";
+                elm.style.cssText = "position:fixed; right:0rem; bottom:0rem;opacity:1; z-index:1";
+
+                let rem = parseInt($('html').css("fontSize"));
+                var startX = -rem * 0.4;
+                var startY = - rem * 0.5;
+                var endX = -window.innerWidth/2 + rem * 0.3;
+                var endY = -window.innerHeight/2 - rem * 0.1;
+                var startX1 = endX -rem * 0.1;
+                var startY1 = endY;
+                var endY1 = -window.innerHeight/2 + rem * 1;
+                $(".b-tomato").append(elm);
+
+                var endY0 = endX  + rem * 0.4;
+
+                //生成tomato并且动画
+                animation({
+                    targets: elm,
+                    duration: 800,
+                    easing: 'linear',
+                    translateX: [startX,endX],
+                    translateY: [startY,endY],
+                    rotate: {
+                        value: 360,
+                        duration: 600,
+                        easing: 'linear'
+                    },
+                    complete: function () {
+                        animation.remove(elm);
+                        elm.className = "tomato tomato2";
+                        var rTime = 300;
+                        var tTime = 500;
+                        animation({
+                            targets: elm,
+                            delay:0,
+                            duration: rTime + tTime,
+                            easing: 'easeInCubic',
+                            translateX: [startX1,startX1],
+                            translateY: [startY1,endY1],
+                            scale: {
+                                value: [1.3,3],
+                                delay: 0,
+                                duration: rTime,
+                                easing: 'linear'
+                            },
+                            opacity: {
+                                value: 0,
+                                delay: rTime,
+                                duration:tTime,
+                                easing: 'easeInExpo'
+                            },
+                            complete: function () {
+                                elm.remove();
+                                animation.remove(elm);
+                            }
+                        })
+                    }
+                });
+            },false
+    )
+</script>
+</body>
+
+</html>
