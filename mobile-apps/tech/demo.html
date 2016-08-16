@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tech demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no,minimal-ui"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="author" content="Tencent..gavinning"/>
+    <meta name="copyright" content="Copyright (c) 1998-2012 Tencent."/>
+    <meta name="description" content="手机腾讯网"/>
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-page-mode" content="no-title">
+    <script>
+        (function() {
+            var baseFontSize = 100;
+            var baseWidth = 320;
+            var clientWidth = document.documentElement.clientWidth || window.innerWidth;
+            var clientHeight = document.documentElement.clientHeight || window.innerHeight;
+            var isPortrai = true;
+            if (window.orientation) {
+                isPortrai= (window.orientation == 0 || window.orientation == 180) ? true : false;
+            }
+            clientWidth = isPortrai?clientWidth:clientHeight;
+            var innerWidth = Math.max(Math.min(clientWidth, 480), 320);
+            var rem = 100;
+            if (innerWidth > 362 && innerWidth <= 375) {
+                rem = Math.floor(innerWidth / baseWidth * baseFontSize * 0.9);
+            }
+            if (innerWidth > 375) {
+                rem = Math.floor(innerWidth / baseWidth * baseFontSize * 0.84);
+            }
+            window.__baseREM = rem;
+            document.querySelector('html').style.fontSize = rem + 'px';
+        }());
+    </script>
+    <link rel="stylesheet" href="static/demo.css"/>
+</head>
+<body>
+<div id="wrapper" class="ios">
+    <div class="header">
+        <img src="static/images/header.jpg"/>
+        <div class="hContent">
+            <div class="icons">
+                <span></span>
+                <span></span>
+            </div>
+            <h3 class="title">#话题#</h3>
+            <div class="describe">这是一个话题</div>
+            <div class="concern"><a>+关注</a></div>
+        </div>
+    </div>
+    <div class="tab">
+        <span>讨论</span><span>新闻</span><span>审核</span>
+    </div>
+    <div class="content">
+    </div>
+</div>
+</body>
+</html>
