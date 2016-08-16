@@ -46,13 +46,14 @@
             width:100%;
             bottom: 0;
             padding: 0.1rem;
+            text-align: center;
         }
 
         .btns .btn {
             display: inline-block;
             width: 0.8rem;
             height: 0.8rem;
-            margin: 0.2rem;
+            margin: 0.1rem;
             text-align: center;
         }
 
@@ -99,7 +100,7 @@
 <script src="js/mods/zepto.min.js"></script>
 <script src="js/mods/anime.js"></script>
 <script>
-    $(".btns:nth-child(2)").click(
+    $(".btn.b-tomato").click(
             function () {
                 var elm = document.createElement("span");
                 elm.className = "tomato tomato1";
