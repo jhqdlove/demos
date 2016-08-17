@@ -57,31 +57,96 @@
             text-align: center;
         }
 
-        .btn span {
+        .btn>span {
             display: inline-block;
             width: 0.6rem;
             height: 0.6rem;
         }
 
         span.tomato {
-            background-image: url("static/images/game_tomato.png");
+            background-image: url("static/images/tomato.png");
             background-repeat: no-repeat;
+            background-size: 0.6rem 0.6rem;
+            background-position: 0rem 0rem;
         }
+        .tomato-anim{
+            background-image: url("static/images/game_tomato.png");
+            background-size: 1.5rem 1.084rem;
+            background-repeat: no-repeat;
+            position:fixed;
+            right:0rem;
+            bottom:0rem;
+            opacity:1;
+            z-index:1;
+        }
+
         .tomato1{
-            background-size: 1.2rem 1.2rem;
-            background-position: -0.4rem -0.65rem;
+            background-position: -0.6rem -0.58rem;
         }
+
         .tomato2{
-            background-size: 0.9rem 0.9rem;
-            background-position: 0.21rem 0rem;
+            width: 0.65rem !important;
+            height: 0.7rem !important;
+            background-position: 0rem 0rem;
         }
 
         .tomato3{
-            background-size: 0.9rem 0.9rem;
-            background-position: -0.38rem 0.115rem;
+            background-position: -0.65rem 0.03rem;
         }
-    </style>
 
+
+        .juice{
+            opacity: 0;
+            display: block;
+            background-image: url("static/images/game_tomato.png");
+            background-repeat: no-repeat;
+            background-size: 1.5rem 1.084rem;
+            position:absolute;
+            opacity:1;
+            z-index:2;
+        }
+
+        .juice1{
+            width: 0.17rem;
+            height: 0.15rem;
+            left:0.1rem;
+            top:0.1rem;
+            background-position: -1.25rem -0.11rem;
+        }
+
+        .juice2{
+            left:0.1rem;
+            top:0.5rem;
+            width: 0.1rem;
+            height: 0.1rem;
+            background-position: -1.42rem -0.11rem;
+        }
+        .juice3 {
+            left:0.5rem;
+            top:0.1rem;
+            width: 0.12rem;
+            height: 0.08rem;
+            background-position: -1.25rem -0.03rem;
+        }
+
+        .juice4 {
+            left:0.4rem;
+            top:0.4rem;
+            width: 0.1rem;
+            height: 0.1rem;
+            background-position: -1.3rem -0.26rem;
+        }
+
+        .juice5{
+            left:0.5rem;
+            top:0.1rem;
+            width: 0.1rem;
+            height: 0.1rem;
+            background-position: -1.42rem -0.11rem;
+        }
+
+
+    </style>
     <div class="btns">
         <div class="btn">
             <span></span>
@@ -92,7 +157,7 @@
             <p>散花</p>
         </div>
         <div class="btn b-tomato">
-            <span class="tomato tomato1"></span>
+            <span class="tomato tomato3"></span>
             <p>扔番茄</p>
         </div>
     </div>
@@ -100,68 +165,102 @@
 <script src="js/mods/zepto.min.js"></script>
 <script src="js/mods/anime.js"></script>
 <script>
-    $(".btn.b-tomato").click(
-            function () {
-                var elm = document.createElement("span");
-                elm.className = "tomato tomato1";
-                elm.style.cssText = "position:fixed; right:0rem; bottom:0rem;opacity:1; z-index:1";
+    window.__REM =  parseInt($('html').css("fontSize"));
 
-                let rem = parseInt($('html').css("fontSize"));
-                var startX = -rem * 0.4;
-                var startY = - rem * 0.5;
-                var endX = -window.innerWidth/2 + rem * 0.3;
-                var endY = -window.innerHeight/2 - rem * 0.1;
-                var startX1 = endX -rem * 0.1;
-                var startY1 = endY;
-                var endY1 = -window.innerHeight/2 + rem * 1;
-                $(".b-tomato").append(elm);
+    var tomatoAnim = function(){
+        var rem = window.__REM;
+        var startX = -rem * 0.4;
+        var startY = - rem * 0.5;
+        var endX = -window.innerWidth/2 + rem * 0.3;
+        var endY = -window.innerHeight/2 - rem * 0.1;
+        var startX1 = endX -rem * 0.1;
+        var startY1 = endY;
+        var endY1 = -window.innerHeight/2 + rem * 2;
+        var endY0 = endX  + rem * 0.4;
 
-                var endY0 = endX  + rem * 0.4;
+        var elm = document.createElement("span");
+        $(".b-tomato").append(elm);
 
-                //生成tomato并且动画
-                animation({
-                    targets: elm,
-                    duration: 800,
-                    easing: 'linear',
-                    translateX: [startX,endX],
-                    translateY: [startY,endY],
-                    rotate: {
-                        value: 360,
-                        duration: 600,
-                        easing: 'linear'
+        step1();
+
+        function step1(){
+            elm.className = "tomato-anim tomato1";
+            animation({
+                targets: elm,
+                duration: 100,
+                easing: 'linear',
+                translateX: [startX,endX],
+                translateY: [startY,endY],
+                rotate: {
+                    value: 360,
+                    delay: 0,
+                    duration: 100,
+                    easing: 'linear'
+                },
+                complete: function () {
+                    animation.remove(elm);
+                    step2();
+                }
+            });
+        }
+
+        function step2(){
+            elm.className = "tomato-anim tomato2";
+            var juices = [elm];
+            var getJuice = function(i){
+                var temp =  document.createElement("span");
+                temp.className = "juice juice"+i;
+                return temp;
+            }
+            for(var i=1;i<=5;i++){
+                juices.push(getJuice(i));
+                elm.appendChild(juices[i]);
+            }
+
+            var dis = 3;
+            var transX = [[startX1,startX1],dis * -0.15 +"rem",dis * 0+"rem",dis * 0.06+"rem",dis * 0.05+"rem",dis * 0.12+"rem"]
+            var transY = [[startY1,endY1],dis * -0.1+"rem",dis * 0.1+"rem",dis * -0.06+"rem",dis * 0.1+"rem",dis * -0.12+"rem"]
+
+            var rTime = 300;
+            var tTime = 400;
+            animation({
+                targets: juices,
+                delay:rTime,
+                duration: tTime,
+                easing: 'easeInCirc',
+                translateX: function(e, i) {
+                    return transX[i]
+                },
+                translateY: function(e, i) {
+                    return transY[i]
+                },
+                scale: {
+                    value: function(e, i) {
+                        if(i==0)return[1,3]
+                        else return 1;
                     },
-                    complete: function () {
-                        animation.remove(elm);
-                        elm.className = "tomato tomato2";
-                        var rTime = 300;
-                        var tTime = 500;
-                        animation({
-                            targets: elm,
-                            delay:0,
-                            duration: rTime + tTime,
-                            easing: 'easeInCubic',
-                            translateX: [startX1,startX1],
-                            translateY: [startY1,endY1],
-                            scale: {
-                                value: [1.3,3],
-                                delay: 0,
-                                duration: rTime,
-                                easing: 'linear'
-                            },
-                            opacity: {
-                                value: 0,
-                                delay: rTime,
-                                duration:tTime,
-                                easing: 'easeInExpo'
-                            },
-                            complete: function () {
-                                elm.remove();
-                                animation.remove(elm);
-                            }
-                        })
-                    }
-                });
-            },false
+                    delay: 0,
+                    duration: rTime,
+                    easing: 'easeInCirc'
+                },
+                opacity: {
+                    value: function(e, i) {
+                        if(i==0)return 0;
+                        else return 1;
+                    },
+                    delay: rTime,
+                    duration:tTime,
+                    easing: 'easeInExpo'
+                },
+                complete: function () {
+                    elm.remove();
+                    animation.remove(juices);
+                }
+            })
+        }
+    }
+    $(".btn.b-tomato").click(
+            tomatoAnim,false
     )
 </script>
 </body>
