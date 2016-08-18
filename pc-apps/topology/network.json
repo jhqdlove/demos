@@ -1,0 +1,144 @@
+{
+  "nodes": [
+    {
+      "deviceId": 1,
+      "weight": 1,
+      "x": "35%",
+      "y": "20%"
+    },
+    {
+      "deviceId": 2,
+      "weight": 2,
+      "x": "10%",
+      "y": "90%"
+    },
+    {
+      "deviceId": 3,
+      "weight": 3,
+      "x": "70%",
+      "y": "90%"
+    }
+  ],
+  "topo": [
+    {
+      "deviceId": 1,
+      "nDeviceId": 2,
+      "metric": 100
+    },
+    {
+      "deviceId": 1,
+      "nDeviceId": 3,
+      "metric": 100
+    },
+    {
+      "deviceId": 2,
+      "nDeviceId": 3,
+      "metric": 100
+    },
+    {
+      "deviceId": 3,
+      "nDeviceId": 2,
+      "metric": 100
+    },
+    {
+      "deviceId": 3,
+      "nDeviceId": 1,
+      "metric": 100
+    },
+    {
+      "deviceId": 2,
+      "nDeviceId": 1,
+      "metric": 100
+    }
+  ],
+  "maps": {
+    "route": [
+      {
+        "prefix": "192.168.12.1/32",
+        "links": [
+          {
+            "key": 3,
+            "value": 2
+          },
+          {
+            "key": 2,
+            "value": 1
+          }
+        ]
+      },
+      {
+        "prefix": "192.168.23.3/32",
+        "links": [
+          {
+            "key": 1,
+            "value": 2
+          },
+          {
+            "key": 2,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "prefix": "192.168.13.3/32",
+        "links": [
+          {
+            "key": 2,
+            "value": 3
+          },
+          {
+            "key": 3,
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "flow": [
+      {
+        "flow": "192.168.3.1-192.168.1.1",
+        "links": [
+          {
+            "key": 3,
+            "value": 2,
+            "type": "ovs"
+          },
+          {
+            "key": 2,
+            "value": 1,
+            "type": "ovs"
+          }
+        ]
+      },
+      {
+        "flow": "192.168.1.1-192.168.3.1",
+        "links": [
+          {
+            "key": 1,
+            "value": 2,
+            "type": "ovs"
+          },
+          {
+            "key": 2,
+            "value": 3,
+            "type": "ovs"
+          }
+        ]
+      },
+      {
+        "flow": "192.168.2.1-192.168.1.1",
+        "links": [
+          {
+            "key": 2,
+            "value": 3,
+            "type": "of13"
+          },
+          {
+            "key": 3,
+            "value": 1,
+            "type": "of13"
+          }
+        ]
+      }
+    ]
+  }
+}

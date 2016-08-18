@@ -8,202 +8,143 @@
 <body>
 
 </body>
-<div id="topology" style="width: 600px;height:400px;"></div>
 <div id="routingTable" style="width: 600px;height:400px;"></div>
+<script src="../../scripts/jquery/jquery-1.12.1.min.js"></script>
 <script type="text/javascript">
-    var topologyChart = echarts.init(document.getElementById('topology'));
     var routingChart = echarts.init(document.getElementById('routingTable'));
-
-    // 指定图表的配置项和数据
-    topologyOption = {
-        title: {
-            text: 'network path',
-            textStyle:{
-                fontSize:12
+    $.getJSON('network.json', function (json){
+        var nodes = json.nodes.map(function (node){
+            return{
+                name:node.deviceId,
+                x: node.x,
+                y: node.y,
+                symbolSize: node.weight
+            }
+        });
+        var topo = json.topo.map(function (link){
+            return{
+                source: link.deviceId,
+                target: link.nDeviceId
+            }
+        })
+        var route = json.maps.route.map(function (route){
+            return{
+                name: route.prefix,
+                links: route.links.map(function (link){
+                    return {
+                        source: link.key,
+                        target: link.value
+                    }
+                })
+            }
+        })
+        routingOption = {
+            title: {
+                text: 'network path',
+                textStyle:{
+                    fontSize:12
+                }
             },
-            textAlign:"center",
-            left:"20%"
-        },
-        legend:{
-            show:true,
-            data: [{
-                name: 'topology',
-                // 强制设置图形为圆。
-                icon: 'circle'
-            }]
-        },
-        tooltip: {},
-        animationDurationUpdate: 1500,
-        animationEasingUpdate: 'quinticInOut',
-        series : [
-            {
-                type: 'graph',
-                name: 'topology',
-                layout: 'none',
-                symbolSize: 50,
-                left: '25%',
-                top: '25%',
-                width: '50%',
-                height: '50%',
-                focusNodeAdjacency: true,
-                label: {
-                    normal: {
-                        show: true
+            legend:{
+                show:true,
+                left:'80%',
+                data: [{
+                    name: '192.168.3.0/24',
+                    // 强制设置图形为圆。
+                    icon: 'circle'
+                },{
+                    name: '192.168.1.0/24',
+                    // 强制设置图形为圆。
+                    icon: 'circle'
+                }]
+            },
+            tooltip: {},
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series : [
+                {
+                    type: 'graph',
+                    name: '192.168.3.0/24',
+                    layout: 'none',
+                    symbolSize: 50,
+                    edgeSymbol: ['circle', 'arrow'],
+                    left: '25%',
+                    top: '25%',
+                    width: '50%',
+                    height: '50%',
+                    label: {
+                        emphasis: {
+                            position: 'right',
+                            show: true
+                        }
                     },
-                    emphasis: {
-                        show: true
+                    data: nodes,
+                    links: [ {
+                        source: 'R1',
+                        target: 'R2'
+                    }, {
+                        source: 'R2',
+                        target: 'R3'
+                    }],
+                    lineStyle: {
+                        normal: {
+                            opacity: 0.9,
+                            width: 2,
+                            curveness: 0
+                        }
                     }
-                },
-                data: [{
-                    name: 'R1',
-                    x: 200,
-                    y: 100
-                }, {
-                    name: 'R2',
-                    x: 100,
-                    y:300
-                }, {
-                    name: 'R3',
-                    x: 300,
-                    y: 300
-                }],
-                links: [{
-                    source: 'R1',
-                    target: 'R2',
-                },  {
-                    source: 'R1',
-                    target: 'R3'
-                }, {
-                    source: 'R2',
-                    target: 'R3'
-                }],
-                lineStyle: {
-                    normal: {
-                        opacity: 0.9,
-                        width: 2,
-                        curveness: 0
-                    }
-                }
-            }
-        ]
-    };
-    routingOption = {
-        title: {
-            text: 'network path',
-            textStyle:{
-                fontSize:12
-            }
-        },
-        legend:{
-            show:true,
-            left:'80%',
-            data: [{
-                name: '192.168.3.0/24',
-                // 强制设置图形为圆。
-                icon: 'circle'
-            },{
-                name: '192.168.1.0/24',
-                // 强制设置图形为圆。
-                icon: 'circle'
-            }]
-        },
-        tooltip: {},
-        animationDurationUpdate: 1500,
-        animationEasingUpdate: 'quinticInOut',
-        series : [
-            {
-                type: 'graph',
-                name: '192.168.3.0/24',
-                layout: 'none',
-                symbolSize: 50,
-                edgeSymbol: ['circle', 'arrow'],
-                left: '25%',
-                top: '25%',
-                width: '50%',
-                height: '50%',
-                label: {
-                    emphasis: {
-                        position: 'right',
-                        show: true
-                    }
-                },
-                data: [{
-                    name: 'R1',
-                    x: 200,
-                    y: 100
-                }, {
-                    name: 'R2',
-                    x: 100,
-                    y:300
-                }, {
-                    name: 'R3',
-                    x: 300,
-                    y: 300
-                }],
-                // links: [],
-                links: [ {
-                    source: 'R1',
-                    target: 'R2'
-                }, {
-                    source: 'R2',
-                    target: 'R3'
-                }],
-                lineStyle: {
-                    normal: {
-                        opacity: 0.9,
-                        width: 2,
-                        curveness: 0
+                },{
+                    type: 'graph',
+                    name: '192.168.1.0/24',
+                    layout: 'none',
+                    symbolSize: 50,
+                    edgeSymbol: ['circle', 'arrow'],
+                    left: '25%',
+                    top: '25%',
+                    width: '50%',
+                    height: '50%',
+                    label: {
+                        emphasis: {
+                            position: 'right',
+                            show: true
+                        }
+                    },
+                    data: [{
+                        name: 'R1',
+                        x: 200,
+                        y: 100
+                    }, {
+                        name: 'R2',
+                        x: 100,
+                        y:300
+                    }, {
+                        name: 'R3',
+                        x: 300,
+                        y: 300
+                    }],
+                    // links: [],
+                    links: [ {
+                        source: 'R3',
+                        target: 'R2'
+                    }, {
+                        source: 'R2',
+                        target: 'R1'
+                    }],
+                    lineStyle: {
+                        normal: {
+                            opacity: 0.9,
+                            width: 2,
+                            curveness: 0
+                        }
                     }
                 }
-            },{
-                type: 'graph',
-                name: '192.168.1.0/24',
-                layout: 'none',
-                symbolSize: 50,
-                edgeSymbol: ['circle', 'arrow'],
-                left: '25%',
-                top: '25%',
-                width: '50%',
-                height: '50%',
-                label: {
-                    emphasis: {
-                        position: 'right',
-                        show: true
-                    }
-                },
-                data: [{
-                    name: 'R1',
-                    x: 200,
-                    y: 100
-                }, {
-                    name: 'R2',
-                    x: 100,
-                    y:300
-                }, {
-                    name: 'R3',
-                    x: 300,
-                    y: 300
-                }],
-                // links: [],
-                links: [ {
-                    source: 'R3',
-                    target: 'R2'
-                }, {
-                    source: 'R2',
-                    target: 'R1'
-                }],
-                lineStyle: {
-                    normal: {
-                        opacity: 0.9,
-                        width: 2,
-                        curveness: 0
-                    }
-                }
-            }
-        ]
-    };
-    // 使用刚指定的配置项和数据显示图表。
-    topologyChart.setOption(topologyOption);
-    routingChart.setOption(routingOption);
+            ]
+        };
+        routingChart.setOption(routingOption);
+    })
+
+
+
+
 </script>
 </html>
