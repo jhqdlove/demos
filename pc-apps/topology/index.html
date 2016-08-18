@@ -9,142 +9,124 @@
 
 </body>
 <div id="routingTable" style="width: 600px;height:400px;"></div>
+<div id="flowTable" style="width: 600px;height:400px;"></div>
 <script src="../../scripts/jquery/jquery-1.12.1.min.js"></script>
 <script type="text/javascript">
     var routingChart = echarts.init(document.getElementById('routingTable'));
-    $.getJSON('network.json', function (json){
-        var nodes = json.nodes.map(function (node){
-            return{
-                name:node.deviceId,
+    var flowChart = echarts.init(document.getElementById('flowTable'));
+    var baseGraph = {
+        type: 'graph',
+        layout: 'none',
+        symbolSize: 50,
+        left:50,
+        width: 200,
+        label: {
+            normal: {
+                show: true
+            }
+        }
+    }
+
+
+    $.getJSON('network.json', function (json) {
+        var nodes = json.nodes.map(function (node) {
+            return {
+                name: "R" + node.deviceId,
                 x: node.x,
-                y: node.y,
-                symbolSize: node.weight
+                y: node.y
             }
         });
-        var topo = json.topo.map(function (link){
-            return{
-                source: link.deviceId,
-                target: link.nDeviceId
-            }
-        })
-        var route = json.maps.route.map(function (route){
-            return{
+
+        var topoGraph = $.extend({
+            name: "topology",
+            data: nodes,
+            edges: json.topo.map(function (link) {
+                return {
+                    source: "R" + link.deviceId,
+                    target: "R" + link.nDeviceId,
+                    value:link.metric
+                }
+            })
+        }, baseGraph);
+
+        var routeLegendData = [{"name": "topology"}];
+        var routeSeries = [topoGraph];
+
+        json.maps.route.forEach(function (route) {
+            var routeGraph = {
                 name: route.prefix,
-                links: route.links.map(function (link){
+                edgeSymbol: ['circle', 'arrow'],
+                data: nodes,
+                edges: route.links.map(function (link) {
                     return {
-                        source: link.key,
-                        target: link.value
+                        source: "R"+link.key,
+                        target: "R"+link.value
                     }
                 })
-            }
-        })
-        routingOption = {
+            };
+            routeGraph = $.extend(routeGraph, baseGraph);
+
+            routeLegendData.push({"name": route.prefix});
+            routeSeries.push(routeGraph);
+        });
+
+        var flowLegendData = [{"name": "topology"}];
+        var flowSeries = [topoGraph];
+
+        json.maps.flow.forEach(function (flow) {
+            var flowGraph = {
+                name: flow.flow,
+                edgeSymbol: ['circle', 'arrow'],
+                data: nodes,
+                edges: flow.links.map(function (link) {
+                    return {
+                        source: "R"+link.key,
+                        target: "R"+link.value
+                    }
+                })
+            };
+            flowGraph = $.extend(flowGraph, baseGraph);
+
+            flowLegendData.push({"name": flow.flow});
+            flowSeries.push(flowGraph);
+        });
+        var routingOption = {
             title: {
-                text: 'network path',
-                textStyle:{
-                    fontSize:12
+                text: 'routing path',
+                textStyle: {
+                    fontSize: 12
                 }
             },
-            legend:{
-                show:true,
-                left:'80%',
-                data: [{
-                    name: '192.168.3.0/24',
-                    // 强制设置图形为圆。
-                    icon: 'circle'
-                },{
-                    name: '192.168.1.0/24',
-                    // 强制设置图形为圆。
-                    icon: 'circle'
-                }]
+            legend: {
+                left:400,
+                selectedMode:'single',
+                data:routeLegendData
             },
             tooltip: {},
             animationDurationUpdate: 1500,
             animationEasingUpdate: 'quinticInOut',
-            series : [
-                {
-                    type: 'graph',
-                    name: '192.168.3.0/24',
-                    layout: 'none',
-                    symbolSize: 50,
-                    edgeSymbol: ['circle', 'arrow'],
-                    left: '25%',
-                    top: '25%',
-                    width: '50%',
-                    height: '50%',
-                    label: {
-                        emphasis: {
-                            position: 'right',
-                            show: true
-                        }
-                    },
-                    data: nodes,
-                    links: [ {
-                        source: 'R1',
-                        target: 'R2'
-                    }, {
-                        source: 'R2',
-                        target: 'R3'
-                    }],
-                    lineStyle: {
-                        normal: {
-                            opacity: 0.9,
-                            width: 2,
-                            curveness: 0
-                        }
-                    }
-                },{
-                    type: 'graph',
-                    name: '192.168.1.0/24',
-                    layout: 'none',
-                    symbolSize: 50,
-                    edgeSymbol: ['circle', 'arrow'],
-                    left: '25%',
-                    top: '25%',
-                    width: '50%',
-                    height: '50%',
-                    label: {
-                        emphasis: {
-                            position: 'right',
-                            show: true
-                        }
-                    },
-                    data: [{
-                        name: 'R1',
-                        x: 200,
-                        y: 100
-                    }, {
-                        name: 'R2',
-                        x: 100,
-                        y:300
-                    }, {
-                        name: 'R3',
-                        x: 300,
-                        y: 300
-                    }],
-                    // links: [],
-                    links: [ {
-                        source: 'R3',
-                        target: 'R2'
-                    }, {
-                        source: 'R2',
-                        target: 'R1'
-                    }],
-                    lineStyle: {
-                        normal: {
-                            opacity: 0.9,
-                            width: 2,
-                            curveness: 0
-                        }
-                    }
+            series: routeSeries
+        };
+        var flowOption = {
+            title: {
+                text: 'flow path',
+                textStyle: {
+                    fontSize: 12
                 }
-            ]
+            },
+            legend: {
+                left:400,
+                selectedMode:'single',
+                data:flowLegendData
+            },
+            tooltip: {},
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series: flowSeries
         };
         routingChart.setOption(routingOption);
+        flowChart.setOption(flowOption);
     })
-
-
-
 
 </script>
 </html>
