@@ -41,9 +41,323 @@
 <body>
 <div id="wrapper" class="ios">
     <style>
+
+         .main-comment {
+            padding: 0 .12rem;
+            border-bottom: 1px solid #f7f7f7
+        }
+
+         .main-comment-title {
+            padding: .18rem 0 .05rem;
+            line-height: 1;
+            font-size: .16rem
+        }
+
+         .main-comment-title:before {
+            content: '';
+            display: inline-block;
+            width: .04rem;
+            height: .15rem;
+            background: #4081e1;
+            margin-right: .06rem;
+            color: #000;
+            vertical-align: -.01rem
+        }
+
+         .main-comment-list.small {
+            background: #f9f9f9;
+            margin: .1rem 0
+        }
+
+         .main-comment-list li {
+            padding: .12rem 0 !important;
+            border-bottom: 1px solid #f7f7f7
+        }
+
+         .main-comment-list.small li {
+            padding: .12rem .1rem !important;
+            border-bottom: 1px solid #f2f2f2
+        }
+
+         .main-comment-list.small2 li {
+            padding: .12rem 0;
+            border-bottom: 1px solid #ededed
+        }
+
+         .main-comment-list.small li.show-more {
+            padding: .07rem 0;
+            text-align: center;
+            font-size: .14rem
+        }
+
+         .main-comment-list li:last-child {
+            border-bottom: 0
+        }
+
+         .main-comment-list .u-img {
+            display: block;
+            float: left;
+            width: .3rem;
+            height: .3rem;
+            margin-right: .06rem
+        }
+
+         .main-comment-list .img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            -webkit-border-radius: 50%
+        }
+
+         .main-comment-list .detail {
+            overflow: hidden;
+            font-size: .14rem;
+            color: #333
+        }
+
+         .main-comment-list .detail.type1 {
+            background: url(static/images/img-comment.png) no-repeat 100% 0;
+            -webkit-background-size: .66rem auto;
+            background-size: .66rem auto
+        }
+
+         .main-comment-list .cmt-name-wrap {
+            position: relative;
+            font-size: .1rem;
+            color: #888
+        }
+
+         .main-comment-list .cmt-name-wrap a {
+            color: #3f81e1
+        }
+
+         .main-comment-list .cmt-title {
+            display: box;
+            display: -webkit-box;
+            font-size: .1rem;
+            color: #888
+        }
+
+         .main-comment-list .cmt-title a {
+            color: #3f81e1
+        }
+
+         .main-comment-list .cmt-title2 {
+            display: box;
+            display: -webkit-box;
+            color: #888
+        }
+
+         .main-comment-list .cmt-name {
+            display: block;
+            -webkit-box-flex: 1;
+            margin-bottom: .03rem;
+            font-weight: 700;
+            font-size: .12rem;
+            color: #3f81e1
+        }
+
+         .main-comment-list .cmt-title time,  .main-comment-list .cmt-title span {
+            margin-right: .07rem
+        }
+
+         .main-comment-list .cmt-title2 .cmt-name {
+            margin-bottom: 0
+        }
+
+
+         .main-comment-list .cmt-name-wrap .grade {
+            position: absolute;
+            right: 0;
+            top: .02rem;
+            font-size: .12rem
+        }
+
+         .main-comment-list .ico-cmt {
+            position: absolute;
+            right: 0;
+            top: .02rem;
+            display: inline-block;
+            width: .12rem;
+            height: .12rem;
+            text-align: center;
+            color: #fff;
+            font-size: .1rem;
+            line-height: .12rem;
+            -webkit-border-radius: .01rem;
+            border-radius: .01rem
+        }
+
+         .main-comment-list .ico-hot {
+            background: #e60012
+        }
+
+         .main-comment-list .ico-new {
+            background: #1c63cf
+        }
+
+         .main-comment-list.small .cmt-name {
+            -webkit-box-flex: 1
+        }
+
+         .main-comment-list .cmt-title .link-qqbroswer {
+            color: #93afca
+        }
+
+         .main-comment-list .cmt-title .location {
+            overflow: hidden;
+            -webkit-box-flex: 1;
+            box-flex: 1;
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+         .main-comment-list .cmt-title .location:before {
+            content: '';
+            display: inline-block;
+            width: .07rem;
+            height: .1rem;
+            background: url(../images/comment/img/sp-comment.png) no-repeat 0 -.3rem;
+            -webkit-background-size: 1.5rem auto;
+            background-size: 1.5rem auto;
+            margin-right: .03rem;
+            vertical-align: -.02rem
+        }
+
+         .main-comment-list .cmt-content {
+            margin: .08rem 0;
+            line-height: 1.4
+        }
+
+         .main-comment-list.small .cmt-content,  .main-comment-list.small2 .cmt-content {
+            margin: .05rem 0 -.01rem
+        }
+
+         .main-comment-list .cmt-bar {
+            text-align: right
+        }
+
+         .main-comment-list .cmt-bar:after {
+            display: block;
+            content: '';
+            clear: both
+        }
+
+         .main-comment-list .cmt-btn2 {
+            display: inline-block;
+            height: .2rem;
+            border: 1px solid #ededed;
+            -webkit-border-radius: .01rem;
+            padding: 0 .08rem;
+            margin-left: .05rem;
+            border-radius: .01rem;
+            text-align: center;
+            color: #93afca;
+            font-size: .12rem;
+            line-height: .2rem
+        }
+
+         .main-comment-list .cmt-btn2:before {
+            content: '';
+            display: inline-block;
+            width: .12rem;
+            height: .12rem;
+            background: url(../images/comment/img/sp-comment.png) no-repeat;
+            -webkit-background-size: 1.5rem auto;
+            background-size: 1.5rem auto;
+            margin-right: .04rem;
+            vertical-align: -.02rem
+        }
+
+         .main-comment-list .btn-ilike:before {
+            background-position: 0rem -.6rem
+        }
+
+         .main-comment-list .btn-ilike.active:before {
+            background-position: 0rem -.9rem
+        }
+
+         .main-comment-list .btn-reply:before {
+            background-position: -.3rem -.6rem
+        }
+
+         .main-comment-list .cmt-title .btn-report {
+            color: #93afca
+        }
+    </style>
+    <div class="main-comment commentInfo">
+        <div class="main-comment-title">最新评论</div>
+        <ul class="main-comment-list commentInfoList">
+            <li data-id="6171844663512039275">
+                    <span class="u-img">
+                        <img src="http://q1.qlogo.cn/g?b=qq&amp;k=6YC2CibwoqicaFO8xNldH7fQ&amp;s=40&amp;t=1471449600"
+                             class="img">
+                    </span>
+                <div class="detail">
+                    <div class="cmt-name-wrap">
+                        <a class="cmt-name">
+                            腾讯网友
+                        </a>
+                    </div>
+                    <div class="cmt-title">
+                        <time class="time">1小时前</time>
+
+
+                        <span class="location">中国北京东城</span>
+
+                        <span class="btn-report j-ToggleReport">举报</span>
+                    </div>
+
+
+                    <ul class="main-comment-list small">
+                        <li>
+                            <div class="cmt-name-wrap">
+                                <a class="cmt-name">
+                                    春暖、花开
+
+
+                                </a>
+                                <span class="grade">1</span>
+                            </div>
+                            <div class="cmt-title">
+                                <time class="time">10小时前</time>
+
+
+                                <span class="location">中国湖南郴州</span>
+
+                            </div>
+                            <div class="cmt-content">
+                                我们喜欢你是因为看到你及时很帅也不骄不躁的苦练游泳为国家争荣誉。而今不知为何，你在里约的表现令我们失望了，你看上去对游泳没有热情了，不积极了！！希望你赶紧调整吧。
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="cmt-content">关键是态度</div>
+                    <div class="cmt-bar">
+                        <em class="cmt-btn2 btn-ilike j-Support" data-supportnum="2">2</em>
+                        <em class="cmt-btn2 btn-reply j-ToggleReply">回复</em>
+                    </div>
+                    <div class="info-reply-area small" style="display:none;">
+                        <textarea placeholder="回复Ta：" class="cmt-text j-UserInput"></textarea>
+                        <div class="info-reply-bar">
+
+                            <span class="cmt-location active j-ToggleMap">点击获取位置</span>
+
+                            <button class="cmt-btn j-Reply">发表</button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <a class="comment-link-more cmt-more j-CatMore catMore" href="javascript:;">
+            <span>更多评论(</span><span class="remain-comment">152</span><span>条)</span>
+        </a>
+    </div>
+    <style>
         .btns {
             position: fixed;
-            width:100%;
+            width: 100%;
             bottom: 0;
             padding: 0.1rem;
             text-align: center;
@@ -57,7 +371,7 @@
             text-align: center;
         }
 
-        .btn>span {
+        .btn > span {
             display: inline-block;
             width: 0.6rem;
             height: 0.6rem;
@@ -69,77 +383,78 @@
             background-size: 0.6rem 0.6rem;
             background-position: 0rem 0rem;
         }
-        .tomato-anim{
+
+        .tomato-anim {
             background-image: url("static/images/game_tomato.png");
             background-size: 1.5rem 1.084rem;
             background-repeat: no-repeat;
-            position:fixed;
-            right:0rem;
-            bottom:0rem;
-            opacity:1;
-            z-index:1;
+            position: fixed;
+            right: 0rem;
+            bottom: 0rem;
+            opacity: 1;
+            z-index: 1;
         }
 
-        .tomato1{
+        .tomato1 {
             background-position: -0.6rem -0.58rem;
         }
 
-        .tomato2{
+        .tomato2 {
             width: 0.65rem !important;
             height: 0.7rem !important;
             background-position: 0rem 0rem;
         }
 
-        .tomato3{
+        .tomato3 {
             background-position: -0.65rem 0.03rem;
         }
 
-
-        .juice{
+        .juice {
             opacity: 0;
             display: block;
             background-image: url("static/images/game_tomato.png");
             background-repeat: no-repeat;
             background-size: 1.5rem 1.084rem;
-            position:absolute;
-            opacity:1;
-            z-index:2;
+            position: absolute;
+            opacity: 1;
+            z-index: 2;
         }
 
-        .juice1{
+        .juice1 {
             width: 0.17rem;
             height: 0.15rem;
-            left:0.1rem;
-            top:0.1rem;
+            left: 0.1rem;
+            top: 0.1rem;
             background-position: -1.25rem -0.11rem;
         }
 
-        .juice2{
-            left:0.1rem;
-            top:0.5rem;
+        .juice2 {
+            left: 0.1rem;
+            top: 0.5rem;
             width: 0.1rem;
             height: 0.1rem;
             background-position: -1.42rem -0.11rem;
         }
+
         .juice3 {
-            left:0.5rem;
-            top:0.1rem;
+            left: 0.5rem;
+            top: 0.1rem;
             width: 0.12rem;
             height: 0.08rem;
             background-position: -1.25rem -0.03rem;
         }
 
         .juice4 {
-            left:0.4rem;
-            top:0.4rem;
+            left: 0.4rem;
+            top: 0.4rem;
             width: 0.1rem;
             height: 0.1rem;
             background-position: -1.3rem -0.26rem;
         }
 
-        .juice5{
-            left:0.5rem;
-            top:0.1rem;
+        .juice5 {
+            left: 0.5rem;
+            top: 0.1rem;
             width: 0.1rem;
             height: 0.1rem;
             background-position: -1.42rem -0.11rem;
@@ -165,32 +480,32 @@
 <script src="js/mods/zepto.min.js"></script>
 <script src="js/mods/anime.js"></script>
 <script>
-    window.__REM =  parseInt($('html').css("fontSize"));
+    window.__REM = parseInt($('html').css("fontSize"));
 
-    var tomatoAnim = function(){
+    var tomatoAnim = function () {
         var rem = window.__REM;
         var startX = -rem * 0.4;
-        var startY = - rem * 0.5;
-        var endX = -window.innerWidth/2 + rem * 0.3;
-        var endY = -window.innerHeight/2 - rem * 0.1;
-        var startX1 = endX -rem * 0.1;
+        var startY = -rem * 0.5;
+        var endX = -window.innerWidth / 2 + rem * 0.3;
+        var endY = -window.innerHeight / 2 - rem * 0.1;
+        var startX1 = endX - rem * 0.1;
         var startY1 = endY;
-        var endY1 = -window.innerHeight/2 + rem * 2;
-        var endY0 = endX  + rem * 0.4;
+        var endY1 = -window.innerHeight / 2 + rem * 2;
+        var endY0 = endX + rem * 0.4;
 
         var elm = document.createElement("span");
         $(".b-tomato").append(elm);
 
         step1();
 
-        function step1(){
+        function step1() {
             elm.className = "tomato-anim tomato1";
             animation({
                 targets: elm,
                 duration: 100,
                 easing: 'linear',
-                translateX: [startX,endX],
-                translateY: [startY,endY],
+                translateX: [startX, endX],
+                translateY: [startY, endY],
                 rotate: {
                     value: 360,
                     delay: 0,
@@ -204,39 +519,39 @@
             });
         }
 
-        function step2(){
+        function step2() {
             elm.className = "tomato-anim tomato2";
             var juices = [elm];
-            var getJuice = function(i){
-                var temp =  document.createElement("span");
-                temp.className = "juice juice"+i;
+            var getJuice = function (i) {
+                var temp = document.createElement("span");
+                temp.className = "juice juice" + i;
                 return temp;
             }
-            for(var i=1;i<=5;i++){
+            for (var i = 1; i <= 5; i++) {
                 juices.push(getJuice(i));
                 elm.appendChild(juices[i]);
             }
 
             var dis = 3;
-            var transX = [[startX1,startX1],dis * -0.15 +"rem",dis * 0+"rem",dis * 0.06+"rem",dis * 0.05+"rem",dis * 0.12+"rem"]
-            var transY = [[startY1,endY1],dis * -0.1+"rem",dis * 0.1+"rem",dis * -0.06+"rem",dis * 0.1+"rem",dis * -0.12+"rem"]
+            var transX = [[startX1, startX1], dis * -0.15 + "rem", dis * 0 + "rem", dis * 0.06 + "rem", dis * 0.05 + "rem", dis * 0.12 + "rem"]
+            var transY = [[startY1, endY1], dis * -0.1 + "rem", dis * 0.1 + "rem", dis * -0.06 + "rem", dis * 0.1 + "rem", dis * -0.12 + "rem"]
 
             var rTime = 300;
             var tTime = 400;
             animation({
                 targets: juices,
-                delay:rTime,
+                delay: rTime,
                 duration: tTime,
                 easing: 'easeInCirc',
-                translateX: function(e, i) {
+                translateX: function (e, i) {
                     return transX[i]
                 },
-                translateY: function(e, i) {
+                translateY: function (e, i) {
                     return transY[i]
                 },
                 scale: {
-                    value: function(e, i) {
-                        if(i==0)return[1,3]
+                    value: function (e, i) {
+                        if (i == 0)return [1, 3]
                         else return 1;
                     },
                     delay: 0,
@@ -244,12 +559,12 @@
                     easing: 'easeInCirc'
                 },
                 opacity: {
-                    value: function(e, i) {
-                        if(i==0)return 0;
+                    value: function (e, i) {
+                        if (i == 0)return 0;
                         else return 1;
                     },
                     delay: rTime,
-                    duration:tTime,
+                    duration: tTime,
                     easing: 'easeInExpo'
                 },
                 complete: function () {
@@ -260,7 +575,7 @@
         }
     }
     $(".btn.b-tomato").click(
-            tomatoAnim,false
+            tomatoAnim, false
     )
 </script>
 </body>
